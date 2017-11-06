@@ -11,9 +11,11 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Created by rrs27 on 2017-11-06.
+ * Class to represent a Java bean of Product objects
+ *
+ * @author Raul RS
+ * @version 1.0
  */
-
 public class Product {
     private int id;
     private String name;
@@ -23,6 +25,16 @@ public class Product {
     private String colors;
     private String stores;
 
+    /**
+     * Class constructor
+     * @param id
+     * @param name
+     * @param description
+     * @param prices
+     * @param photo
+     * @param colors
+     * @param stores
+     */
     public Product(int id, String name, String description, String prices, String photo, String colors, String stores) {
         this.id = id;
         this.name = name;
@@ -32,6 +44,7 @@ public class Product {
         this.colors = colors;
         this.stores = stores;
     }
+
 
     public int getId() {
         return id;
@@ -102,6 +115,10 @@ public class Product {
                 '}';
     }
 
+    /**
+     * Method to retrieve a fake random-generated Product object
+     * @return Product
+     */
     public static Product getFakeProduct(){
         Random random = new Random();
         APIutils api = new APIutils();

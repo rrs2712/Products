@@ -5,19 +5,35 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Created by rrs27 on 2017-11-06.
+ * Class to represent a Java bean of Price objects
+ *
+ * @author Raul RS
+ * @version 1.0
  */
-
 public class Price {
 
+    private Map<String,Double> price;
+
+    /**
+     * Getter method
+     * @return Price - Map<String, Double>
+     */
     public Map<String, Double> getPrice() {
         return price;
     }
 
+    /**
+     * Setter method
+     * @param price - Price object
+     */
     public void setPrice(Map<String, Double> price) {
         this.price = price;
     }
 
+    /**
+     * Class constructor
+     * @param price - Map<String, Double>
+     */
     public Price(Map<String, Double> price) {
         this.price = price;
     }
@@ -29,8 +45,10 @@ public class Price {
                 '}';
     }
 
-    private Map<String,Double> price;
-
+    /**
+     * Method to retrieve a fake random-generated Price object
+     * @return price - Price object
+     */
     public static Price getFakePrice(){
         Random random = new Random();
 

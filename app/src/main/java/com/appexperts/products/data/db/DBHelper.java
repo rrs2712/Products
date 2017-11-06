@@ -8,9 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Created by rrs27 on 2017-11-04.
+ *
+ * Class to manage SQLite DB and CRUD operations. Likewise provide access to related
+ * fields, for instance, table columns.
+ *
+ * @author Raul RS
+ * @version 1.0
  */
-
 public class DBHelper extends SQLiteOpenHelper{
 
     // Log
@@ -40,13 +44,6 @@ public class DBHelper extends SQLiteOpenHelper{
         PRODUCT_PHOTO + " TEXT(500), " +
         PRODUCT_COLORS + " TEXT(500), " +
         PRODUCT_STORES + " TEXT(2000));";
-    private final String INITIAL_RECORDS =
-        "INSERT INTO Product (name, description, prices, photo, colors, stores) " +
-        "VALUES('Coca Cola', 'Soda', '{p1:1,p2:1.5}', '', '{1:black,2:red}', '{1:{name:addess},2:{name:address}}'); " +
-        "INSERT INTO Product (name, description, prices, photo, colors, stores) " +
-        "VALUES('Pepsi', 'soft drink', '{p1:0.5,p2:1}', '', '{1:black,2:blue}', '{1:{name:addess},2:{name:address}}'); " +
-        "INSERT INTO Product (name, description, prices, photo, colors, stores) " +
-        "VALUES('Cream soda', 'Soda', '{p1:1,p2:2}', '', '{1:white,2:blue}', '{1:{name:addess},2:{name:address}}');";
     // Raw queries
     private String SELECT_ALL_PRODUCTS =
         "SELECT " +
@@ -71,11 +68,10 @@ public class DBHelper extends SQLiteOpenHelper{
             " FROM " +
                 TABLE_PRODUCT + " WHERE _id = ?";
     private String DELETE_ONE_RECORD = "DELETE FROM Product WHERE _Id = ?";
+
     // ## Constructors ## //
 
     public DBHelper(Context context) {
-        //super(context, name, factory, version);
-
         super(context, DB_NAME, DB_FACTORY, DB_VERSION);
         Log.d(TAG,"DBHelper instantiated");
     }
@@ -87,7 +83,6 @@ public class DBHelper extends SQLiteOpenHelper{
         Log.d(TAG, "onCreate");
 
         db.execSQL(CREATE_TABLE_PRODUCT);
-//        db.execSQL(INITIAL_RECORDS);
         Log.d(TAG, TABLE_PRODUCT + " table created");
     }
 
@@ -101,6 +96,16 @@ public class DBHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
+    /**
+     * Method to insert a row in TABLE_PRODUCT
+     * @param name
+     * @param desc
+     * @param prices
+     * @param photo
+     * @param colors
+     * @param stores
+     * @return isInserted - boolean value
+     */
     public boolean saveRecord(String name, String desc, String prices, String photo, String colors, String stores){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -116,24 +121,49 @@ public class DBHelper extends SQLiteOpenHelper{
         return (result == -1) ? false : true;
     }
 
+    /**
+     * Method to retrieve all records in TABLE_PRODUCT
+     * @return Cursor - With all the available static fields from this class
+     */
     public Cursor getAllRecords(){
         SQLiteDatabase db = this.getWritableDatabase();
 
         return db.rawQuery(SELECT_ALL_PRODUCTS, null);
     }
 
+    /**
+     * Method to retrieve a cursor with an specific single row requested by ID
+     * @param id - int value representing a record ID
+     * @return Cursor - With the specific requested row
+     */
     public Cursor getRecord(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         String sID = String.valueOf(id);
         return db.rawQuery(SELECT_ONE_PRODUCT, new String[]{sID});
     }
 
+    /**
+     * Method to delete a record by id
+     * @param id - int
+     * @return count - int of available records after deletion
+     */
     public int deleteRecord(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         String sID = String.valueOf(id);
         return db.rawQuery(DELETE_ONE_RECORD, new String[]{sID}).getCount();
     }
 
+    /**
+     * Method to update and available record filtered by id
+     * @param id - String
+     * @param name - String
+     * @param desc - String
+     * @param prices - String
+     * @param photo - String
+     * @param colors - String
+     * @param stores - String
+     * @return isUpdated - boolean value
+     */
     public boolean updateRecord(String id, String name, String desc, String prices, String photo, String colors, String stores){
         SQLiteDatabase db = this.getWritableDatabase();
 
