@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Products</string>
+    <string name="btn_add">Create Product</string>
+    <string name="tv_list_label">Select a product to edit or delete:</string>
+    <string name="title_activity_add_record">Add Record</string>
+    <string name="btn_save">Save Record</string>
+    <string name="product_name_label">Name</string>
+    <string name="btn_show">Show Product</string>
+    <string name="btn_del">Delete</string>
+    <string name="btn_upd">Update</string>
+</resources>
